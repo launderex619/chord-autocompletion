@@ -21,8 +21,8 @@ class SPO {
     this._problem = problem;
     this._socialLearningRate = q2;
     this._cognitionLearningRate = q1;
-    this._maxVelocity = problem.MAX_VALUE;
-    this._minVelocity = problem.MIN_VALUE;
+    this._maxVelocity = 5;//problem.MAX_VALUE;
+    this._minVelocity = -5;//problem.MIN_VALUE;
     this._neighborhood = o;
     this._individuals = [];
     this._particles = p;
