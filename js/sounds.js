@@ -11,7 +11,7 @@ const piano = document.getElementById("piano");
 
 piano.addEventListener("mousedown", e => {
   // fires off a note continously until trigger is released
-  playNote(e.target.id, true)
+  playNote(e.target.id, true);
 });
 
 piano.addEventListener("mouseup", e => {
@@ -25,29 +25,29 @@ function playNote(note, addToList) {
   switch (note) {
     case "do":
       if (addToList) {
-        addNota(note, "C4");
+        addNota(note, "C5");
       }
-      return synth.triggerAttack("C4");
+      return synth.triggerAttack("C5");
     case "re_b":
       if (addToList) {
-        addNota(note, "C#4");
+        addNota(note, "C#5");
       }
-      return synth.triggerAttack("C#4");
+      return synth.triggerAttack("C#5");
     case "re":
       if (addToList) {
-        addNota(note, "D4");
+        addNota(note, "D5");
       }
-      return synth.triggerAttack("D4");
+      return synth.triggerAttack("D5");
     case "mi_b":
       if (addToList) {
-        addNota(note, "D#4");
+        addNota(note, "D#5");
       }
-      return synth.triggerAttack("D#4");
+      return synth.triggerAttack("D#5");
     case "mi":
       if (addToList) {
-        addNota(note, "E4");
+        addNota(note, "E5");
       }
-      return synth.triggerAttack("E4");
+      return synth.triggerAttack("E5");
     case "fa":
       if (addToList) {
         addNota(note, "F4");
@@ -87,6 +87,12 @@ function playNote(note, addToList) {
 }
 
 function playSong(notes) {
+  if(notes.length <= 0){
+    launchToast('Stroke the piano!');
+    return;
+  }else{
+    launchToast('Playing your song');
+  }
   Tone.Transport.stop();
   Tone.Transport.position = 0;
   Tone.Transport.cancel();
@@ -112,3 +118,15 @@ function playSong(notes) {
   // start the transport which controls the main timeline
   Tone.Transport.start();
 }
+
+
+/**
+ * Documentation & References
+ https://tonejs.github.io/
+ * https://platzi.com/blog/que-es-y-como-funcionan-las-promesas-en-javascript/
+ * https://getbootstrap.com/docs/4.0/components/navs/#horizontal-alignment
+ * 
+ * https://material.io/resources/icons/?search=back&icon=arrow_back&style=baseline
+ * 
+ https://codepen.io/cesarmurillos/pen/ExxqqPM
+ */

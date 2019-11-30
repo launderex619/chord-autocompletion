@@ -7,29 +7,33 @@
 	<meta name="author" content="">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.9/Tone.js">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.9/Tone.js">
+
 	</script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	 crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 	 crossorigin="anonymous">
+
 	</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 	 crossorigin="anonymous">
+
 	</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	 crossorigin="anonymous">
+
 	</script>
 	</script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href="/css/piano.css" rel="stylesheet">
-	<link rel="stylesheet" 
-</head>
+	<link href="/css/components.css" rel="stylesheet">
+	<link rel="stylesheet" </head>
 
-<body>
-  <nav class="navbar sticky-top navbar-dark bg-nav">
-    <a class="navbar-brand" href="/">
-      <i class="material-icons m-0 p-0">
+	<body>
+		<nav class="navbar sticky-top navbar-dark bg-nav">
+			<a class="navbar-brand" href="/">
+				<i class="material-icons m-0 p-0">
       home
       </i>
     </a>
@@ -40,9 +44,8 @@
     </a>
   </nav>
     
-	<div class="piano-area pt-xs-3 pt-sm-auto">
-		<div class="card bg-transparent">
-			<ul id="piano" class="col-12 col-md-10 col-lg-6"> 
+	<div class="content mt-5">
+		<ul id="piano" class="piano col-12 col-md-10 col-lg-6"> 
 				<li id="fa" class="white b"></li>
 				<li id="sol_b" class="black as"></li>
 				<li id="sol" class="white a"></li>
@@ -55,20 +58,23 @@
 				<li id="re" class="white d"></li>
 				<li id="mi_b" class="black cs"></li>
 				<li id="mi" class="white c"></li>
-			</ul>
-		</div>
+		</ul>
     <div class="controls-area">
-      <ul class="navbar bg-nav justify-content-center">
+      <ul class="navbar bg-nav justify-content-center m-0">
         <li class="nav-item">
-          <div id="clickMe" onclick="playSong(notas);" class="white-button p-2 m-1">Play Song</div>
+          <div id="clickMe" onclick="playSong(notas);" class="white-button p-2 m-1">Play song</div>
         </li> 
         <li class="nav-item">
-          <div id="melody" onclick="generateMelody(notas);" class="white-button p-2 m-1">Generate Melody</div> 
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text white-button p-2" onclick="generateMelody(notas);" id="melody">Generate melody</span>
+            </div>
+            <input type="text" id="numberNotes" class="form-control" placeholder="Number of notes" aria-label="Default" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  maxlength="6" aria-describedby="melody">
+          </div>
         </li>
       </ul>
     </div>
-      <!-- Esos dos que comentas estan bien ya el otro essolo para que se vea nice
-      man, cuantos botones consideras correctos?, yo creo que solo 2, el que ya esta y otro que diga algo como: Generar Melodia y ahi metemos el algoritmo mamalon que genera melodias xd -->
+    <div id="toast"></div>
 		
 		<div class="note-area">
 			<div id="scrollNote" class="note">
@@ -76,12 +82,13 @@
 			</div>
 		</div>
 	</div>
-	<script src="/js/script.js">
-	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
-	</script>
-	<script src="/js/sounds.js">
-	</script>
+  <script src="/js/Dictionary.js"></script>
+	<script src="/js/components.js"></script>
+	<script src="/js/script.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="/js/sounds.js"></script>
+  <script src="/js/SwarmParticleOptimization.js"></script>
+  <script src="/js/SwarmParticleController.js"></script>
 </body>
 
 </html>

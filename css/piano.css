@@ -7,11 +7,11 @@ body {
   background:#222
 }
 
-ul #piano {
+.piano{
   height:18em;
   width:108vw;
   margin:5em auto;
-  padding:3em 0 0 3em;
+  padding:3em 5vw 0 5vw;
   position:relative;
   border:1px solid #160801;
   border-radius:1em;
