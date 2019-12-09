@@ -25,6 +25,8 @@
 
 	</script>
 	</script>
+  
+
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href="/css/piano.css" rel="stylesheet">
 	<link href="/css/components.css" rel="stylesheet">
@@ -37,9 +39,14 @@
         home
         </i>
       </a>
-      <a class="navbar-brand mr-auto" href="/">
+      <a class="navbar-brand" href="/">
         <p class="mb-2">
           <small>Chords Auto Completion</small>
+        </p>
+      </a>
+      <a class="navbar-brand mr-auto" href="/html/gameScreen.html">
+        <p class="mb-2">
+          <small>Create New</small>
         </p>
       </a>
     </nav>
@@ -81,6 +88,15 @@
 				<canvas id="myCanvas" height=250></canvas>
 			</div>
 		</div>
+    <div class="controls-area d-none" id="downloadSong">
+      <ul class="navbar bg-nav justify-content-center m-0">
+        <li class="nav-item">          
+          <a id="download" download="Your Song.jpg" href="" onclick="downloadImageSong(this);">
+            <div class="white-button p-2 m-1">Download my song</div>
+          </a>
+        </li> 
+      </ul>
+    </div>
 	</div>
   <script src="/js/Dictionary.js"></script>
 	<script src="/js/components.js"></script>

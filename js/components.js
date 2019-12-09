@@ -8,5 +8,15 @@ function launchToast(text) {
   //Hide it back afer 5 seconds
   setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
 }
-  
-    
+
+downloadImageSong = function(el) {
+  var canvas = document.getElementById("myCanvas");
+  var image = canvas.toDataURL("image/jpg");
+  el.href = image;
+};
+
+function showDownloadSong(){
+  var downloadSong = document.getElementById("downloadSong");
+  downloadSong.classList.remove("d-none");
+  downloadSong.classList.add("d-block");
+}

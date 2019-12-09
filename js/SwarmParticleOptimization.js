@@ -39,7 +39,7 @@ class SPO {
       //Add the generated notes to the canvas
       playNote(NOTE_VALUE[this._bestGlobalPosition[i]].nombre, true); //listo arregle el bug xd
     }
-    setTimeout(function () { launchToast('Your melody is ready!'); playSong(notas);}, 100);
+    setTimeout(function () { launchToast('Your melody is ready!'); playSong(notas);showDownloadSong();}, 100);
   }
 
   run() {
@@ -83,7 +83,7 @@ class SPO {
           this._bestGlobalPosition = Object.assign({}, particle._bestPosition);
         }
       });
-      /*console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);*/
+      console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);
       generation++;
     }
     console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);
