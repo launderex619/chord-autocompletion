@@ -2,13 +2,11 @@
 class INDIVIDUAL {
   constructor(vel, dim, problem) {
     this._neighbors = [];
-    this._bestPosition = Array.from({ length: dim }, () => Math.random() * 100);
-    this._position = Array.from({ length: dim }, () => Math.random() * 100);
-    this._velocity = Array.from({ length: dim }, () => Math.random() * 100);
-    this._min = problem.MIN_VALUE;
-    this._max = problem.MAX_VALUE;
-    this._bestFitness = (Math.random() * 100);
-    this._fitness = 100;
+    this._bestPosition = Array.from({ length: dim }, () => Math.round(Math.random() * 11));
+    this._position = Array.from({ length: dim }, () => Math.round(Math.random() * 11));
+    this._velocity = vel;
+    this._bestFitness = 0;
+    this._fitness = 0;
   }
 }
 class SPO {
@@ -27,8 +25,21 @@ class SPO {
     this._individuals = [];
     this._particles = p;
     this._dimensions = n;
-    this._bestGlobalFitness = (Math.random() * 1000000);
-    this._bestGlobalPosition = Array.from({ length: n }, () => Math.random() * 100);
+    this._bestGlobalFitness = 0;
+    this._bestGlobalPosition = Array.from({ length: n }, () => Math.round(Math.random() * 11));
+  }
+  
+
+  updateNotesCanvas(){
+    console.log("this._bestGlobalPosition", this._bestGlobalPosition);
+    console.log("length: ",this._dimensions);
+    for (let i = 0; i < this._dimensions; i++) {
+      console.log(this._bestGlobalPosition[i]); 
+      console.log("note_value",NOTE_VALUE[this._bestGlobalPosition[i]]);
+      //Add the generated notes to the canvas
+      playNote(NOTE_VALUE[this._bestGlobalPosition[i]].nombre, true); //listo arregle el bug xd
+    }
+    setTimeout(function () { launchToast('Your melody is ready!'); playSong(notas);}, 100);
   }
 
   run() {
@@ -36,20 +47,21 @@ class SPO {
     this.createNeighborhood();
     //console.log(this._individuals);
     let generation = 0;
+      //console.log("iterations: ", this._iterations);
     while (generation < this._iterations) {
       //for (particle in this._individuals) { 
       this._individuals.forEach(particle => {
+        //console.log("particle: ", particle);
         for (let dimension = 0; dimension < this._dimensions; dimension++) {
           // calculate the velocity factors
-
           ///posible fallo aqui, habra que comprobar:
-          particle._velocity[dimension] = ((particle._velocity[dimension]) +
+          particle._velocity[dimension] = Math.round(((particle._velocity[dimension]) +
             (this._cognitionLearningRate * (
               particle._bestPosition[dimension] -
               particle._position[dimension])) +
             (this._socialLearningRate * (
               this._bestGlobalPosition[dimension] -
-              particle._position[dimension])));
+              particle._position[dimension]))));
           //////hasta aqui /\
           if (particle._velocity[dimension] > this._maxVelocity) {
             particle._velocity[dimension] = this._maxVelocity;
@@ -57,34 +69,38 @@ class SPO {
           else if (particle._velocity[dimension] < this._minVelocity) {
             particle._velocity[dimension] = this._minVelocity;
           }
-          particle._position[dimension] += particle._velocity[dimension];
+          particle._position[dimension] = (Math.abs(particle._position[dimension] + particle._velocity[dimension])) % 11;
         }
+        //console.log("particle", particle);
         // falta definir el fitness y elegir la mejor posicion hasta el momento
         particle._fitness = this.getFitness(particle._position);
-        if (particle._fitness < particle._bestFitness) {
+        if (particle._fitness > particle._bestFitness) {
           particle._bestFitness = particle._fitness;
           particle._bestPosition = particle._position;
         }
-        if (particle._bestFitness < this._bestGlobalFitness) {
+        if (particle._bestFitness > this._bestGlobalFitness) {
           this._bestGlobalFitness = particle._bestFitness;
           this._bestGlobalPosition = Object.assign({}, particle._bestPosition);
         }
       });
-      console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);
+      /*console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);*/
       generation++;
     }
+    console.log("Generacion: ", generation, " Mejor posicion: ", this._bestGlobalPosition, ", Mejor fitness: ", this._bestGlobalFitness);
+    //Update the notes canvas
+    this.updateNotesCanvas();
   }
 
-  //checado
+  
   initializeIndividuals() {
-    for (let i = 0; i < this._particles; i++) { //checar el for
-      let velocity = 0;  // definir como medir velocidad
+    for (let i = 0; i < this._particles; i++) {
+      let velocity = Array.from({ length: this._dimensions }, () => Math.round(Math.random() * 11));
       let individual = new INDIVIDUAL(velocity, this._dimensions, this._problem);
       this._individuals.push(individual);
     }
   }
 
-  //checado
+  
   createNeighborhood() {
     for (let i = 0; i < this._particles; i++) {
       for (let j = 0; j < this._neighborhood; j++) {
@@ -94,7 +110,7 @@ class SPO {
     }
   }
 
-  // checado
+  
   getBestFitness(nearest_neighbors) {
     let best = nearest_neighbors[0].bestFitness;
     nearest_neighbors.forEach(i => {
@@ -105,8 +121,9 @@ class SPO {
     return best;
   }
 
-  //checado
+  
   getFitness(particle) {
+    //console.log("particle: ", particle);
     return this._problem.fitness(particle);
   }
 }

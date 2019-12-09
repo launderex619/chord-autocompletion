@@ -11,7 +11,12 @@ const piano = document.getElementById("piano");
 
 piano.addEventListener("mousedown", e => {
   // fires off a note continously until trigger is released
-  playNote(e.target.id, true);
+  var id = e.target.id
+  if(document.getElementById(id).classList.contains("disabled")){
+    launchToast('Your melody is being generated!');
+    return;
+  }
+  playNote(id, true);
 });
 
 piano.addEventListener("mouseup", e => {

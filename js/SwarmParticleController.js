@@ -4,57 +4,54 @@ class Chord {
     this.MIN_VALUE = this.AVERAGE - 10.0;
     this.MAX_VALUE = this.AVERAGE + 10.0;
   }
- //Obtains the average from the chords based in its proximity
+  //Obtains the average from the chords based in its proximity
   getAverage(notes) {
+    //console.log(notes);
     let average = 0;
     for (let i = 1; i < notes.length; i++) {
+      /**
+       * 
       let note = NOTE_TYPE[notes[i - 1].nombre];
       average += note[notes[i].nombre];
+       */
+      let note = NOTE_TYPE[notes[i - 1].nombre];//Aqui es donde se presenta el error
+      average += note[notes[i].nombre];//Aqui es donde se presenta el error
     }
     average = average / notes.length;
     return average;
   }
 
-//aqui llegan las posiciones
-
-/*
-https://aggie.io/_d_cyumrye creo que esta si
-
-Entonces quedamos que como fuerza bruta solo generando notas a lo wey hasta que la suma de todas ellas este entre el valor estimado dado por el promedio del input, no?
-
-por ejemplo:
-input: [do, re, do, fa, si] --> promedio 63 (es un ejemplo no es el valor real)
-notas estimadas: 10
-
-ejecuciones: 
-[do, re, do, fa, si]    
-[do, fa, si, fa_b, la]  ->61
-[re, sol, si, fa_b, la] -> 50
-....
-[mi, fa, sol, mi_b, do]   -> 73 
-
-output:
-[mi, fa, sol, mi_b, do]
-
-fui a cenar xd, regreso en 2 horas mas o menos. 
-*/
-  fitness(notes) {  
-    /*
-    let average = 0;
-    for(let i = 0; i < notes.length; i++){
-      average += notes[i];
-    }
-    return average / notes.length;
-  }
-  */
-    let average = 0;
-    for(let i = 0; i < notes.length; i++){
-      average += notes[i];
-    }
+  fitness(notes) {
+    let notesInText = [];
+    //console.log("in fitness", notes);
+    notes.forEach(value => {
+      if(value == undefined){
+        return 0;
+      }
+      notesInText.push(NOTE_VALUE[value]);
+    });
+    let average = this.getAverage(notesInText);
+    let difference = Math.abs(this.AVERAGE - average);
+    //console.log("fitness: ", notes, "notes: ", notesInText);
+    return average - difference;
   }
 }
 
+function disablePiano(){
+  var tiles = document.getElementsByClassName("tile");
+  for (i = 0; i < tiles.length; i++) {
+    tiles[i].classList.add("disabled");
+  }
+  document.getElementById("melody").classList.add("disabled");
+  document.getElementById("numberNotes").disabled = true;
+}
+
 function generateMelody(notes) {
+  console.log(notes);
+  if(document.getElementById("melody").classList.contains("disabled")){
+    launchToast('Your melody is being generated!');
+    return;
+  }
   var numberNotes = document.getElementById("numberNotes").value;
   if (numberNotes <= 0) {
     launchToast('Type an amount of notes to play');
@@ -63,26 +60,27 @@ function generateMelody(notes) {
   if (notes.length <= 0) {
     launchToast('Stroke the piano!');
     return;
-  } else {
-    launchToast('Generating your melody...');
-    problema = new Chord(notes);
-    cantidadParticulas = 50;
-    tamanioVecindario = 16;
-    iteraciones = 2000;
-    dimensiones = numberNotes;
-    cognitionLearningRate = 1.4944;
-    socialLearningRate = 1.4944;
-    spo = new SPO(
-      iteraciones,
-      cantidadParticulas,
-      tamanioVecindario,
-      dimensiones,
-      cognitionLearningRate,
-      socialLearningRate,
-      problema,
-    );
-    spo.run();
   }
-  setTimeout(function () { launchToast('Your melody is ready!'); }, 2000);
+  launchToast('Generating your melody...');
+  disablePiano();
+  problema = new Chord(notes);
+  cantidadParticulas = 1;
+  tamanioVecindario = 1;
+  iteraciones = 2000;
+  dimensiones = numberNotes;
+  cognitionLearningRate = 1.4944;
+  socialLearningRate = 1.4944;
+  spo = new SPO(
+    iteraciones,
+    cantidadParticulas,
+    tamanioVecindario,
+    dimensiones,
+    cognitionLearningRate,
+    socialLearningRate,
+    problema,
+  );
+  //console.log(spo);
+  spo.run();
+
   dimensiones = dimensiones * 2;
 }

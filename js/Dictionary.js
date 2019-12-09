@@ -192,3 +192,18 @@ const NOTE_TYPE = {
   "mi_b": MI_B,
   "mi": MI
 }
+
+const NOTE_VALUE = [
+  {nombre: "fa", sonido: "F4"},
+  {nombre: "sol_b", sonido: "F#4"},
+  {nombre: "sol", sonido: "G4"},
+  {nombre: "la_b", sonido: "G#4"},
+  {nombre: "la", sonido: "A4"},
+  {nombre: "si_b", sonido: "A#4"},
+  {nombre: "si", sonido: "B4"},
+  {nombre: "do", sonido:  "C5"},
+  {nombre: "re_b", sonido: "C#5"},
+  {nombre: "re", sonido: "D5"},
+  {nombre: "mi_b", sonido: "D#5"},
+  {nombre: "mi", sonido: "E5"},
+]
